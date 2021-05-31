@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+	<title>Desafio-Spring</title>
+	 <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      
+      <link rel="stylesheet" href="style/styleCss.css"/>
+</head>
+<body>
+
+	<header>
+		<nav class="menu">
+		    <div class="nav-wrapper">
+		      <a href="#" class="brand-logo">Pedido</a>
+		      <ul id="nav-mobile" class="right hide-on-med-and-down">
+		        <li><a href="/pedidos" class="waves-effect waves-light btn"><i class="material-icons left">add_circle_outline</i>Lista de pedido</a></li>
+		      </ul>
+		    </div>
+		</nav>
+	</header>
+	
+	<div th:each="pedido : ${pedido}" class="container detalhesPedido">
+	<h5>Detalhes do Pedido</h5>
+		<div class="row">
+			<p>ID: <span th:text="${pedido.id}"></span></p>
+			<p>Total R$: <span th:text="${pedido.total_compra}"></span></p>
+			<p>Data da Compra: <span th:text="${pedido.data}"></span></p>
+			<p>ID Cliente: <span th:text="${pedido.id_cliente}"></span></p>
+		</div>
+	</div>
+	
+		 <th:block th:include="mensagemValidacao"></th:block>
+		<div class="container formProduto">
+		<form method="post" th:object="${produto}">
+			Nome: <input type="text" value="" name="nome" placeholder=""/>
+			Descrição: <input type="text" value="" name="descricao" placeholder=""/>
+			Preço: <input type="text" value="" name="preco" placeholder=""/>
+			Quantidade: <input type="text" value="" name="quantidade" placeholder=""/>
+			<button class="waves-effect waves-light btn" type="submit">Adicionar</button>
+		</form>
+		</div>
+
+	<table class="container tabelaProduto">
+		<thead>
+			<tr>
+				<th>Produto:</th>
+				<th>Descrição:</th>
+				<th>Preço:</th>
+				<th>Quantidade</th>
+				<th>Deletar</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="produto : ${produtos}">
+				<td><span th:text="${produto.nome}"></span></td>
+				<td><span th:text="${produto.descricao}"></span></td>
+				<td><span th:text="${produto.preco}"></span></td>
+				<td><span th:text="${produto.quantidade}"></span></td>
+				<td>
+				<a class="btn btn-warning" href=>Editar</a>
+				<a class="btn btn-danger" th:href="@{/deletarProduto/}+${produto.nome}">Excluir</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	
+
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+
+</body>
+
+
+</html>
